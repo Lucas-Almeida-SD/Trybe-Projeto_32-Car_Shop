@@ -1,7 +1,6 @@
 import { carZodSchema, ICar } from "../interfaces/ICar";
 import { IModel } from "../interfaces/IModel";
 import { IService } from "../interfaces/IService";
-import CarModel from "../models/Car.model";
 
 class CarService implements IService<ICar> {
   constructor(private model: IModel<ICar>) {}
