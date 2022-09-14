@@ -14,6 +14,15 @@ class CarController {
 
     res.status(httpStatusCode.CREATED).json(createdCar);
   }
+
+  public async read(
+    _req: Request,
+    res: Response<ICar[]>,
+  ) {
+    const carList = await this.service.read();
+
+    res.status(httpStatusCode.OK).json(carList);
+  }
 }
 
 export default CarController;
