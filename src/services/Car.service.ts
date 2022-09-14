@@ -14,7 +14,7 @@ class CarService implements IService<ICar> {
   }
 
   public async read(): Promise<ICar[]> {
-    throw new Error("Method not implemented.");
+    return this.model.read();
   }
 
   public async readOne(_id: string): Promise<ICar> {
