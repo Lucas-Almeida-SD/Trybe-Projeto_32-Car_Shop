@@ -33,6 +33,14 @@ class MotorcycleController {
     
     res.status(HttpStatusCode.OK).json(updatedMotorcycle);
   }
+
+  public async delete(req: Request, res: Response) {
+    const { id } = req.params;
+
+    await this.service.delete(id);
+
+    res.status(HttpStatusCode.NO_CONTENT).end();
+  }
 }
 
 export default MotorcycleController;
