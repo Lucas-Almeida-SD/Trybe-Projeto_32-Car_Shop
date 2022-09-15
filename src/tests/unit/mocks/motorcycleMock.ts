@@ -9,7 +9,7 @@ export const validMotorcycle: IMotorcycle = {
   engineCapacity: 125
 };
 
-export const validMotorcycleWithId = {
+export const validMotorcycleWithId: IMotorcycle & { _id: string } = {
   _id: '62cf1fc6498565d94eba52cd',
   model: 'Honda CG Titan 125',
   year: 1963,
@@ -28,7 +28,7 @@ export const updatedMotorcycle: IMotorcycle = {
   engineCapacity: 125
 };
 
-export const updatedMotorcycleWithId = {
+export const updatedMotorcycleWithId: IMotorcycle & { _id: string } = {
   _id: '62cf1fc6498565d94eba52cd',
   model: 'Honda CG Titan 125',
   year: 1963,
