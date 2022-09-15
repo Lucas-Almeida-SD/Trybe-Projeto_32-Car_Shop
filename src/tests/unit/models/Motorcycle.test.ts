@@ -51,4 +51,29 @@ describe('Testes de MotorcycleModel', () => {
       expect(result).to.be.eqls([]);
     });
   });
+
+  describe.only('Método "readOne"', () => {
+
+    before(() => {
+      sinon.stub(Model, 'findOne')
+      .onCall(0).resolves(motorcycleMock.validMotorcycleWithId)
+      .onCall(1).resolves(null);
+    });
+
+    after(() => [
+      sinon.restore()
+    ]);
+
+    it('É possível listar uma moto com sucesso pelo id', async () => {
+      const result = await motorcycleModel.readOne(motorcycleMock.validMotorcycleWithId._id);
+
+      expect(result).to.be.eqls(motorcycleMock.validMotorcycleWithId);
+    });
+
+    it('Retorna "null" se não encontrar a moto pelo id', async () => {
+      const result = await motorcycleModel.readOne('idInexistente');
+
+      expect(result).to.be.eqls(null);
+    });
+  });
 });
