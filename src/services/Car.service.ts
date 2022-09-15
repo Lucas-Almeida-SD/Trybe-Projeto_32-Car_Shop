@@ -43,9 +43,15 @@ class CarService implements IService<ICar> {
     return updatedCar;
   }
 
-  // public async delete(_id: string): Promise<ICar> {
-  //   throw new Error("Method not implemented.");
-  // }
+  public async remove(_id: string): Promise<ICar> {
+    CarValidate.validateIdLength(_id);
+
+    const removedCar = await this.model.remove(_id);
+
+    if (!removedCar) throw new Error(ErrorTypes.objectNotFound);
+
+    return removedCar;
+  }
 }
 
 export default CarService;
