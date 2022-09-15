@@ -31,5 +31,28 @@ describe('Testes de CarModel', () => {
     
   });
 
+  describe('Método "read"', () => {
+    before(() => {
+      sinon.stub(Model, 'find')
+      .onCall(0).resolves([carMock.validCar])
+      .onCall(1).resolves([]);
+    });
+
+    after(() => {
+      sinon.restore();
+    });
+
+    it('É possível listar os carros com sucesso', async () => {
+      const result = await carModel.read();
+
+      expect(result).to.be.eqls([carMock.validCar]);
+    });
+
+    it('Retorna uma lista vazia se não houver carros', async () => {
+      const result = await carModel.read();
+
+      expect(result).to.be.eqls([]);
+    });
+  });
 
 });
