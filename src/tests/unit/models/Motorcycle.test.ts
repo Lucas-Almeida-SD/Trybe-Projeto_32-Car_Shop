@@ -4,7 +4,7 @@ import { Model } from 'mongoose';
 import MotorcycleModel from '../../../models/Motorcycle.model';
 import * as motorcycleMock from '../mocks/motorcycleMock';
 
-describe.only('Testes de MotorcycleModel', () => {
+describe('Testes de MotorcycleModel', () => {
   const motorcycleModel = new MotorcycleModel();
 
   describe('Método "create"', () => {
