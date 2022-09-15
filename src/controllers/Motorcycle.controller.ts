@@ -25,6 +25,14 @@ class MotorcycleController {
 
     res.status(HttpStatusCode.OK).json(motorcycle);
   }
+
+  public async update(req: Request, res: Response<IMotorcycle>) {
+    const { id } = req.params;
+    
+    const updatedMotorcycle = await this.service.update(id, req.body);
+    
+    res.status(HttpStatusCode.OK).json(updatedMotorcycle);
+  }
 }
 
 export default MotorcycleController;
