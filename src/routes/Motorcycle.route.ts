@@ -9,9 +9,12 @@ const motorcycleController = new MotorcycleController(motorcycleService);
 
 const motorcycleRoute = Router();
 
-motorcycleRoute.post('/motorcycles', (req, res) => motorcycleController.create(req, res));
-motorcycleRoute.get('/motorcycles', (req, res) => motorcycleController.read(req, res));
-motorcycleRoute.get('/motorcycles/:id', (req, res) => motorcycleController.readOne(req, res));
-motorcycleRoute.put('/motorcycles/:id', (req, res) => motorcycleController.update(req, res));
+const resource = '/motorcycles';
+
+motorcycleRoute.post(`${resource}`, (req, res) => motorcycleController.create(req, res));
+motorcycleRoute.get(`${resource}`, (req, res) => motorcycleController.read(req, res));
+motorcycleRoute.get(`${resource}/:id`, (req, res) => motorcycleController.readOne(req, res));
+motorcycleRoute.put(`${resource}/:id`, (req, res) => motorcycleController.update(req, res));
+motorcycleRoute.delete(`${resource}/:id`, (req, res) => motorcycleController.delete(req, res));
 
 export default motorcycleRoute;
