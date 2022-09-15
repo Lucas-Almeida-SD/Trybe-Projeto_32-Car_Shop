@@ -30,7 +30,17 @@ class CarService implements IService<ICar> {
   }
 
   public async update(_id: string, obj: unknown): Promise<ICar> {
-    throw new Error("Method not implemented.");
+    CarValidate.validateIdLength(_id);
+
+    const parsed = carZodSchema.safeParse(obj);
+
+    if (!parsed.success) throw parsed.error;
+
+    const updatedCar = await this.model.update(_id, obj as ICar);
+
+    if (!updatedCar) throw new  Error(ErrorTypes.objectNotFound);
+
+    return updatedCar;
   }
 
   public async delete(_id: string): Promise<ICar> {
