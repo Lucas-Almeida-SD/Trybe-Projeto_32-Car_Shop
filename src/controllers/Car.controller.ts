@@ -34,6 +34,18 @@ class CarController {
 
     res.status(httpStatusCode.OK).json(car);
   }
+
+  public async update(
+    req: Request,
+    res: Response,
+  ) {
+    const { id } = req.params;
+    const newCarInfo = req.body;
+
+    const updatedCar = await this.service.update(id, newCarInfo);
+
+    res.status(httpStatusCode.OK).json(updatedCar);
+  }
 }
 
 export default CarController;
