@@ -46,6 +46,17 @@ class CarController {
 
     res.status(httpStatusCode.OK).json(updatedCar);
   }
+
+  public async remove(
+    req: Request,
+    res: Response,
+  ) {
+    const { id } = req.params;
+
+    await this.service.remove(id);
+
+    res.status(httpStatusCode.NO_CONTENT).end();
+  }
 }
 
 export default CarController;
