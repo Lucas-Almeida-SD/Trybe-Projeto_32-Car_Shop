@@ -43,10 +43,10 @@ class CarService implements IService<ICar> {
     return updatedCar;
   }
 
-  public async remove(_id: string): Promise<ICar> {
+  public async delete(_id: string): Promise<ICar> {
     CarValidate.validateIdLength(_id);
 
-    const removedCar = await this.model.remove(_id);
+    const removedCar = await this.model.delete(_id);
 
     if (!removedCar) throw new Error(ErrorTypes.objectNotFound);
 

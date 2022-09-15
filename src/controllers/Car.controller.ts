@@ -47,13 +47,13 @@ class CarController {
     res.status(httpStatusCode.OK).json(updatedCar);
   }
 
-  public async remove(
+  public async delete(
     req: Request,
     res: Response,
   ) {
     const { id } = req.params;
 
-    await this.service.remove(id);
+    await this.service.delete(id);
 
     res.status(httpStatusCode.NO_CONTENT).end();
   }
