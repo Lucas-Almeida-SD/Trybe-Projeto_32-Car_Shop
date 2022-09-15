@@ -252,6 +252,17 @@ describe('Testes de CarService', () => {
           }
         });
       });
+
+      describe('Caso o body esteja vazio', () => {
+
+        it('Lança um erro instaciado do "zod"', async () => {
+          try{
+            await carService.update(carMock.validCarWithId._id, {});
+          } catch(err) {
+            expect(err).to.be.instanceOf(ZodError);
+          }
+        });
+      });
     });
   });
 
