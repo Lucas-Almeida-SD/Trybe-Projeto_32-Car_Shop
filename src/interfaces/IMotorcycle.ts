@@ -3,7 +3,7 @@ import { vehicleZodSchema } from './IVehicle';
 
 const motorcycleZodSchema = vehicleZodSchema.extend({
   category: z.enum(['Street', 'Custom', 'Trail']),
-  engineCapacity: z.number().int().lte(0).gte(2500),
+  engineCapacity: z.number().int().min(1).max(2500),
 });
 
 type IMotorcycle = z.infer<typeof motorcycleZodSchema>;
