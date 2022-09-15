@@ -227,6 +227,10 @@ describe('Testes de CarService', () => {
         .onCall(1).resolves(carMock.updatedCarWithId);
       });
 
+      after(() => {
+        sinon.restore();
+      });
+
       describe('Caso o id possua menos que 24 caracteres', () => {
 
         it('Lança o erro "idLengthNotAllowed"', async () => {
@@ -247,6 +251,39 @@ describe('Testes de CarService', () => {
             expect((err as Error).message).to.be.eqls('objectNotFound');
           }
         });
+      });
+    });
+  });
+
+  describe('Método "delete"', () => {
+    
+    before(() => {
+      sinon.stub(carModel, 'delete')
+      .onCall(0).resolves(carMock.validCarWithId)
+      .onCall(1).resolves(null);
+    });
+
+    after(() => {
+      sinon.restore();
+    });
+
+    describe('Quando o carro é deletado com sucesso', () => {
+
+      it('Retorna o objeto do carro deletado', async () => {
+        const result = await carService.delete(carMock.validCarWithId._id);
+
+        expect(result).to.be.eqls(carMock.validCarWithId);
+      });
+    });
+
+    describe('Quando o id é inexistente', () => {
+
+      it('Retorna valor nulo', async () => {
+        try{
+          await carService.delete('999999999999999999999999');
+        } catch(err) {
+          expect((err as Error).message).to.be.eqls('objectNotFound');
+        }
       });
     });
   });
