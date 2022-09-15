@@ -198,5 +198,56 @@ describe('Testes de CarService', () => {
         });
       });
     });
-  })
+  });
+
+  describe('Método "update"', () => {
+
+    describe('Quando o carro é atualizado com sucesso', () => {
+
+      before(() => {
+        sinon.stub(carModel, 'update').resolves(carMock.updatedCarWithId);
+      });
+
+      after(() => {
+        sinon.restore();
+      });
+
+      it('Retorna o objeto do carro atualizado', async () => {
+        const result = await carService.update(carMock.validCarWithId._id, carMock.updatedCar);
+
+        expect(result).to.be.eqls(carMock.updatedCarWithId);
+      });
+    });
+
+    describe('Quando o carro NÃO é atualizado com sucesso', () => {
+
+      before(() => {
+        sinon.stub(carModel, 'update')
+        .onCall(0).resolves(null)
+        .onCall(1).resolves(carMock.updatedCarWithId);
+      });
+
+      describe('Caso o id possua menos que 24 caracteres', () => {
+
+        it('Lança o erro "idLengthNotAllowed"', async () => {
+          try{
+            await carService.update('12345678911234567892123', carMock.updatedCar);
+          } catch(err) {
+            expect((err as Error).message).to.be.eqls('idLengthNotAllowed');
+          }
+        });
+      });
+
+      describe('Caso o id seja inexistente', () => {
+
+        it('Lança o erro "objectNotFound"', async () => {
+          try{
+            await carService.update('999999999999999999999999', carMock.updatedCar);
+          } catch(err) {
+            expect((err as Error).message).to.be.eqls('objectNotFound');
+          }
+        });
+      });
+    });
+  });
 });
