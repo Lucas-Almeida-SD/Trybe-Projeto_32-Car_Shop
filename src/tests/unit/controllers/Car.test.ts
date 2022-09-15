@@ -55,4 +55,21 @@ describe('Testes de CarController', () => {
   });
 
 
+  describe('Método "read"', () => {
+    before(() => {
+      sinon.stub(carService, 'read').resolves([carMock.validCarWithId]);
+    });
+
+    it('Retorna status 200', async () => {
+      await carController.read(req, res);
+
+      expect((res.status as sinon.SinonStub).calledWith(200)).to.be.true;
+    });
+
+    it('Retorna uma lista de carros no corpo da response', async () => {
+      await carController.read(req, res);
+
+    expect((res.json as sinon.SinonStub).calledWith([carMock.validCarWithId])).to.be.true;
+    });
+  });
 });
