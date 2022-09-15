@@ -19,7 +19,7 @@ export const validMotorcycleWithId = {
   engineCapacity: 125
 };
 
-export const updatedMotorcycle = {
+export const updatedMotorcycle: IMotorcycle = {
   model: 'Honda CG Titan 125',
   year: 1963,
   color: 'black',
