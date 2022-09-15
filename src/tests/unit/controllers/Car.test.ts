@@ -72,4 +72,28 @@ describe('Testes de CarController', () => {
     expect((res.json as sinon.SinonStub).calledWith([carMock.validCarWithId])).to.be.true;
     });
   });
+
+  describe('Método "readOne"', () => {
+    before(() => {
+      sinon.stub(carService, 'readOne').resolves(carMock.validCarWithId);
+    });
+
+    after(() => {
+      sinon.restore();
+    })
+
+    req.params = { id: carMock.validCarWithId._id };
+
+    it('Retorna status 200', async () => {
+      await carController.readOne(req, res);
+
+      expect((res.status as sinon.SinonStub).calledWith(200)).to.be.true;
+    });
+
+    it('Retorna o objeto do carro no corpo da response', async () => {
+      await carController.readOne(req, res);
+
+    expect((res.json as sinon.SinonStub).calledWith(carMock.validCarWithId)).to.be.true;
+    });
+  });
 });
