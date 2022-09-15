@@ -20,6 +20,7 @@ describe('Testes de CarController', () => {
   before(() => {
     res.status = sinon.stub().returns(res);
     res.json = sinon.stub().returns(res);
+    res.end = sinon.stub().returns(res);
   });
 
   after(()=>{
@@ -117,6 +118,29 @@ describe('Testes de CarController', () => {
     it('Retorna o objeto atualizadao no corpo da response', async () => {
       await carController.update(req, res);
       expect((res.json as Sinon.SinonStub).calledWith(carMock.updatedCarWithId)).to.be.true;
+    });
+  });
+
+  describe('Método "delete"', () => {
+
+    before(() => {
+      sinon.stub(carService, 'delete').resolves(carMock.updatedCarWithId);
+    });
+    
+    after(() => {
+      sinon.restore();
+    });
+
+    req.params = { id: carMock.validCarWithId._id };
+
+    it('Retorna status 204', async () => {
+      await carController.delete(req, res);
+      expect((res.status as sinon.SinonStub).calledWith(204)).to.be.true;
+    });
+
+    it('Executa o método "end" ao final da resposta', async () => {
+      await carController.delete(req, res);
+      expect((res.end as sinon.SinonStub).called).to.be.true;
     });
   });
 });
