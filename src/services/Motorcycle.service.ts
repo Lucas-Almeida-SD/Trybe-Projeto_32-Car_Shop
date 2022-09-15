@@ -48,8 +48,14 @@ class MotorcycleService implements IService<IMotorcycle> {
     return updatedMotorcycle;
   }
 
-  delete(_id: string): Promise<{ status?: boolean | undefined; model: string; year: number; color: string; buyValue: number; category: 'Street' | 'Custom' | 'Trail'; engineCapacity: number; }> {
-    throw new Error('Method not implemented.');
+  public async delete(_id: string): Promise<IMotorcycle> {
+    MotorcycleValidate.validateIdLength(_id);
+
+    const removedMotorcycle = await this.model.delete(_id);
+
+    if (!removedMotorcycle) throw new Error(ErrorTypes.objectNotFound);
+
+    return removedMotorcycle;
   }
 }
 
