@@ -9,20 +9,19 @@ abstract class MongoModel<T> implements IModel<T> {
   }
 
   public async read(): Promise<T[]> {
-    return this.model.find({}, { __v: false });
+    return this.model.find();
   }
 
   public async readOne(_id: string): Promise<T | null> {
-    return this.model.findOne({ _id }, { __v: false });
+    return this.model.findOne({ _id });
   }
 
   public async update(_id: string, obj: UpdateQuery<T>): Promise<T | null> {
     return this.model.findOneAndUpdate(
       { _id },
-      { ...obj },
+      { ...obj, $unset: { __v: '' } },
       { 
         returnOriginal: false,
-        fields: { __v: false }
       }
     );
   }
