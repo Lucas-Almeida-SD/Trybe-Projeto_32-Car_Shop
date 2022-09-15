@@ -1,4 +1,4 @@
-import { Model } from "mongoose";
+import { Model, UpdateQuery } from "mongoose";
 import { IModel } from "../interfaces/IModel";
 
 abstract class MongoModel<T> implements IModel<T> {
@@ -9,15 +9,22 @@ abstract class MongoModel<T> implements IModel<T> {
   }
 
   public async read(): Promise<T[]> {
-    return this.model.find();
+    return this.model.find({}, { __v: false });
   }
 
   public async readOne(_id: string): Promise<T | null> {
-    return this.model.findOne({ _id });
+    return this.model.findOne({ _id }, { __v: false });
   }
 
-  public async update(_id: string, obj: T): Promise<T | null> {
-    return this.model.findOneAndUpdate({ _id }, { obj });
+  public async update(_id: string, obj: UpdateQuery<T>): Promise<T | null> {
+    return this.model.findOneAndUpdate(
+      { _id },
+      { ...obj },
+      { 
+        returnOriginal: false,
+        fields: { __v: false }
+      }
+    );
   }
 
   public async delete(_id: string): Promise<T | null> {
