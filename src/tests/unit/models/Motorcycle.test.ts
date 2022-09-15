@@ -17,13 +17,38 @@ describe('Testes de MotorcycleModel', () => {
       sinon.restore()
     ]);
 
-    describe('Quando a criação do carro ocorre com sucesso', () => {
+    describe('Quando a criação da moto ocorre com sucesso', () => {
       it('Retorna o objeto criado', async () => {
         const result = await motorcycleModel
           .create(motorcycleMock.validMotorcycle);
 
         expect(result).to.be.eqls(motorcycleMock.validMotorcycleWithId);
       });
+    });
+  });
+
+  describe.only('Método "read"', () => {
+
+    before(() => {
+      sinon.stub(Model, 'find')
+      .onCall(0).resolves([motorcycleMock.validMotorcycleWithId])
+      .onCall(1).resolves([]);
+    });
+
+    after(() => [
+      sinon.restore()
+    ]);
+
+    it('É possível listar as motos com sucesso', async () => {
+      const result = await motorcycleModel.read();
+
+      expect(result).to.be.eqls([motorcycleMock.validMotorcycleWithId]);
+    });
+
+    it('Retorna uma lista vazia se não houver motos', async () => {
+      const result = await motorcycleModel.read();
+
+      expect(result).to.be.eqls([]);
     });
   });
 });
