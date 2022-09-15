@@ -11,6 +11,12 @@ class MotorcycleController {
 
     res.status(HttpStatusCode.CREATED).json(createdMotorcycle);
   }
+
+  public async read(req: Request, res: Response<IMotorcycle[] | []>) {
+    const motorcycleList = await this.service.read();
+
+    res.status(HttpStatusCode.OK).json(motorcycleList);
+  }
 }
 
 export default MotorcycleController;
