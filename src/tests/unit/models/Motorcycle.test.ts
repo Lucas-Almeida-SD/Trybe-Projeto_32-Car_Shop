@@ -4,10 +4,10 @@ import { Model } from 'mongoose';
 import MotorcycleModel from '../../../models/Motorcycle.model';
 import * as motorcycleMock from '../mocks/motorcycleMock';
 
-describe('Testes de MotorcycleModel', () => {
+describe.only('Testes de MotorcycleModel', () => {
   const motorcycleModel = new MotorcycleModel();
 
-  describe.only('Método "create"', () => {
+  describe('Método "create"', () => {
 
     before(() => {
       sinon.stub(Model, 'create').resolves(motorcycleMock.validMotorcycleWithId);
@@ -27,7 +27,7 @@ describe('Testes de MotorcycleModel', () => {
     });
   });
 
-  describe.only('Método "read"', () => {
+  describe('Método "read"', () => {
 
     before(() => {
       sinon.stub(Model, 'find')
@@ -52,7 +52,7 @@ describe('Testes de MotorcycleModel', () => {
     });
   });
 
-  describe.only('Método "readOne"', () => {
+  describe('Método "readOne"', () => {
 
     before(() => {
       sinon.stub(Model, 'findOne')
@@ -71,9 +71,45 @@ describe('Testes de MotorcycleModel', () => {
     });
 
     it('Retorna "null" se não encontrar a moto pelo id', async () => {
-      const result = await motorcycleModel.readOne('idInexistente');
+      const result = await motorcycleModel.readOne('999999999999999999999999');
 
       expect(result).to.be.eqls(null);
     });
+  });
+
+  describe('Método "update"', () => {
+
+    before(() => {
+      sinon.stub(Model, 'findOneAndUpdate')
+      .onCall(0).resolves(motorcycleMock.updatedMotorcycleWithId)
+      .onCall(1).resolves(null);
+    });
+
+    after(() => [
+      sinon.restore()
+    ]);
+
+    describe('Quando a moto é atualizada com sucesso', () => {
+      it('Retorna o objeto da moto atualizado', async () => {
+        const result = await motorcycleModel.update(
+          motorcycleMock.validMotorcycleWithId._id,
+          motorcycleMock.updatedMotorcycle,
+        );
+
+        expect(result).to.be.eqls(motorcycleMock.updatedMotorcycleWithId);
+      });
+    });
+
+    describe('Quando o id é inexistente', () => {
+      it('Retorna valor nulo', async () => {
+        const result = await motorcycleModel.update(
+          '999999999999999999999999',
+          motorcycleMock.updatedMotorcycle,
+        );
+
+        expect(result).to.be.eqls(null);
+      });
+    });
+    
   });
 });
