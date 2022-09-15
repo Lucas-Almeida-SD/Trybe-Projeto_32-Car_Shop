@@ -1,8 +1,8 @@
-import { ErrorTypes } from "../errors/catalog";
-import { carZodSchema, ICar } from "../interfaces/ICar";
-import { IModel } from "../interfaces/IModel";
-import { IService } from "../interfaces/IService";
-import CarValidate from "../validations/Car.validate";
+import { ErrorTypes } from '../errors/catalog';
+import { carZodSchema, ICar } from '../interfaces/ICar';
+import { IModel } from '../interfaces/IModel';
+import { IService } from '../interfaces/IService';
+import CarValidate from '../validations/Car.validate';
 
 class CarService implements IService<ICar> {
   constructor(private model: IModel<ICar>) {}
@@ -38,14 +38,14 @@ class CarService implements IService<ICar> {
 
     const updatedCar = await this.model.update(_id, obj as ICar);
 
-    if (!updatedCar) throw new  Error(ErrorTypes.objectNotFound);
+    if (!updatedCar) throw new Error(ErrorTypes.objectNotFound);
 
     return updatedCar;
   }
 
-  public async delete(_id: string): Promise<ICar> {
-    throw new Error("Method not implemented.");
-  }
+  // public async delete(_id: string): Promise<ICar> {
+  //   throw new Error("Method not implemented.");
+  // }
 }
 
 export default CarService;

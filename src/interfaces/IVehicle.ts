@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from 'zod';
 
 const vehicleZodSchema = z.object({
   model: z.string().min(3),
@@ -13,4 +13,4 @@ type IVehicle = z.infer<typeof vehicleZodSchema>;
 export {
   vehicleZodSchema,
   IVehicle,
-}
+};

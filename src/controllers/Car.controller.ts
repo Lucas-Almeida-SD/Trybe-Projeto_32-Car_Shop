@@ -1,7 +1,7 @@
-import { Request, Response } from "express";
-import httpStatusCode from "../helpers/httpStatusCode";
-import { ICar } from "../interfaces/ICar";
-import { IService } from "../interfaces/IService";
+import { Request, Response } from 'express';
+import httpStatusCode from '../helpers/httpStatusCode';
+import { ICar } from '../interfaces/ICar';
+import { IService } from '../interfaces/IService';
 
 class CarController {
   constructor(private service: IService<ICar>) {}

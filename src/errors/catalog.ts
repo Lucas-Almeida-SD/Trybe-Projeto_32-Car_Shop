@@ -1,4 +1,4 @@
-import httpStatusCode from "../helpers/httpStatusCode"
+import httpStatusCode from '../helpers/httpStatusCode';
 
 export enum ErrorTypes {
   objectNotFound = 'objectNotFound',
@@ -8,11 +8,11 @@ export enum ErrorTypes {
 type ErrorObject = {
   message: string,
   httpStatus: number,
-}
+};
 
 export type ErrorCatalog = {
   [key in ErrorTypes]: ErrorObject;
-}
+};
 
 export const errorCatalog: ErrorCatalog = {
   objectNotFound: {
@@ -23,4 +23,4 @@ export const errorCatalog: ErrorCatalog = {
     message: 'Id must have 24 hexadecimal characters',
     httpStatus: httpStatusCode.BAD_REQUEST,
   },
-}
+};

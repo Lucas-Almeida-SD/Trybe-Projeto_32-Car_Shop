@@ -1,5 +1,5 @@
-import { Model, UpdateQuery } from "mongoose";
-import { IModel } from "../interfaces/IModel";
+import { Model, UpdateQuery } from 'mongoose';
+import { IModel } from '../interfaces/IModel';
 
 abstract class MongoModel<T> implements IModel<T> {
   constructor(protected model: Model<T>) {}
@@ -22,7 +22,7 @@ abstract class MongoModel<T> implements IModel<T> {
       { ...obj, $unset: { __v: '' } },
       { 
         returnOriginal: false,
-      }
+      },
     );
   }
 

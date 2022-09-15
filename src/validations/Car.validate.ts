@@ -1,4 +1,4 @@
-import { ErrorTypes } from "../errors/catalog";
+import { ErrorTypes } from '../errors/catalog';
 
 export default abstract class CarValidate {
   public static validateIdLength(_id: string) {
