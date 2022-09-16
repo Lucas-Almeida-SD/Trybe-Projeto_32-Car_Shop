@@ -84,4 +84,24 @@ describe('Testes de "MotorcycleController"', () => {
       ).to.be.true;
     });
   });
+
+  describe('Método "update"', () => {
+    req.params = { id: motorcycleMock.validMotorcycleWithId._id };
+    req.body = motorcycleMock.updatedMotorcycle;
+
+    it('Retorna status 200', async () => {
+      await motorcycleController.update(req, res);
+
+      expect((res.status as sinon.SinonStub).calledWith(200)).to.be.true;
+    });
+
+    it('Retorna o objeto da moto no corpo da response', async () => {
+      await motorcycleController.update(req, res);
+
+      expect(
+        (res.json as sinon.SinonStub)
+        .calledWith(motorcycleMock.updatedMotorcycleWithId)
+      ).to.be.true;
+    });
+  });
 });
