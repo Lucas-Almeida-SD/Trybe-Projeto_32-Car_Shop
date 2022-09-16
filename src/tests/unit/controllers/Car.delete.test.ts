@@ -16,7 +16,6 @@ describe('Testes de CarController', () => {
 
   before(() => {
     res.status = sinon.stub().returns(res);
-    res.json = sinon.stub().returns(res);
     res.end = sinon.stub().returns(res);
   });
 
