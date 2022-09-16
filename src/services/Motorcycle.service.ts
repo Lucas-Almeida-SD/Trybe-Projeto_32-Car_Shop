@@ -2,7 +2,7 @@ import { ErrorTypes } from '../errors/catalog';
 import { IModel } from '../interfaces/IModel';
 import { IMotorcycle, motorcycleZodSchema } from '../interfaces/IMotorcycle';
 import { IService } from '../interfaces/IService';
-import MotorcycleValidate from '../validations/Motorcycle.validate';
+import Validate from '../validations/Validate';
 
 class MotorcycleService implements IService<IMotorcycle> {
   constructor(private model: IModel<IMotorcycle>) {}
@@ -22,7 +22,7 @@ class MotorcycleService implements IService<IMotorcycle> {
   }
 
   public async readOne(_id: string): Promise<IMotorcycle> {
-    MotorcycleValidate.validateIdLength(_id);
+    Validate.IdLength(_id);
 
     const motorcycle = await this.model.readOne(_id);
 
@@ -32,7 +32,7 @@ class MotorcycleService implements IService<IMotorcycle> {
   }
 
   public async update(_id: string, obj: unknown): Promise<IMotorcycle> {
-    MotorcycleValidate.validateIdLength(_id);
+    Validate.IdLength(_id);
 
     const parsed = motorcycleZodSchema.safeParse(obj);
 
@@ -49,7 +49,7 @@ class MotorcycleService implements IService<IMotorcycle> {
   }
 
   public async delete(_id: string): Promise<IMotorcycle> {
-    MotorcycleValidate.validateIdLength(_id);
+    Validate.IdLength(_id);
 
     const removedMotorcycle = await this.model.delete(_id);
 

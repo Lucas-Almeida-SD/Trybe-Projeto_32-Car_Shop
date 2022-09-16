@@ -2,7 +2,7 @@ import { ErrorTypes } from '../errors/catalog';
 import { carZodSchema, ICar } from '../interfaces/ICar';
 import { IModel } from '../interfaces/IModel';
 import { IService } from '../interfaces/IService';
-import CarValidate from '../validations/Car.validate';
+import Validate from '../validations/Validate';
 
 class CarService implements IService<ICar> {
   constructor(private model: IModel<ICar>) {}
@@ -20,7 +20,7 @@ class CarService implements IService<ICar> {
   }
 
   public async readOne(_id: string): Promise<ICar> {
-    CarValidate.validateIdLength(_id);
+    Validate.IdLength(_id);
   
     const carFound = await this.model.readOne(_id);
 
@@ -30,7 +30,7 @@ class CarService implements IService<ICar> {
   }
 
   public async update(_id: string, obj: unknown): Promise<ICar> {
-    CarValidate.validateIdLength(_id);
+    Validate.IdLength(_id);
 
     const parsed = carZodSchema.safeParse(obj);
 
@@ -44,7 +44,7 @@ class CarService implements IService<ICar> {
   }
 
   public async delete(_id: string): Promise<ICar> {
-    CarValidate.validateIdLength(_id);
+    Validate.IdLength(_id);
 
     const removedCar = await this.model.delete(_id);
 
