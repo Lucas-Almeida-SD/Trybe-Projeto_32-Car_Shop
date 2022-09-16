@@ -48,4 +48,21 @@ describe('Testes de "MotorcycleController"', () => {
       ).to.be.true;
     });
   });
+
+  describe('Método "read"', () => {
+    it('Retorna status 200', async () => {
+      await motorcycleController.read(req, res);
+
+      expect((res.status as sinon.SinonStub).calledWith(200)).to.be.true;
+    });
+
+    it('Retorna uma lista de motos no corpo da response', async () => {
+      await motorcycleController.read(req, res);
+
+      expect(
+        (res.json as sinon.SinonStub)
+        .calledWith([motorcycleMock.validMotorcycleWithId])
+      ).to.be.true;
+    });
+  });
 });
