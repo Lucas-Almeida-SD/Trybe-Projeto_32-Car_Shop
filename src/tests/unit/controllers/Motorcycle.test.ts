@@ -104,4 +104,20 @@ describe('Testes de "MotorcycleController"', () => {
       ).to.be.true;
     });
   });
+
+  describe('Método "delete"', () => {
+    req.params = { id: motorcycleMock.validMotorcycleWithId._id };
+
+    it('Retorna status 204', async () => {
+      await motorcycleController.delete(req, res);
+
+      expect((res.status as sinon.SinonStub).calledWith(204)).to.be.true;
+    });
+
+    it('Retorna o objeto da moto no corpo da response', async () => {
+      await motorcycleController.delete(req, res);
+
+      expect((res.end as sinon.SinonStub).called).to.be.true;
+    });
+  });
 });
