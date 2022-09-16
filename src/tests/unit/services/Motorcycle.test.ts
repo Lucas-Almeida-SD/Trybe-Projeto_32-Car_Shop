@@ -157,4 +157,30 @@ describe.only('Testes de MotorcycleService', () => {
 
     });
   });
+
+  describe('Método "read"', () => {
+
+    before(() => {
+      sinon
+        .stub(motorcycleModel, 'read')
+        .onCall(0).resolves([motorcycleMock.validMotorcycleWithId])
+        .onCall(1).resolves([]);
+    });
+
+    after(() => {
+      sinon.restore();
+    });
+
+    it('É possível listar as motos com sucesso', async() => {
+      const result = await motorcycleService.read();
+
+      expect(result).to.be.eqls([motorcycleMock.validMotorcycleWithId]);
+    });
+
+    it('Retorna uma lista vazia se não houver motos', async() => {
+      const result = await motorcycleService.read();
+
+      expect(result).to.be.eqls([]);
+    });
+  });
 });
