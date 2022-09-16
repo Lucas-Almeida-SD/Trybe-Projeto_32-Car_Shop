@@ -4,6 +4,9 @@ import { Model } from 'mongoose';
 import MotorcycleModel from '../../../models/Motorcycle.model';
 import * as motorcycleMock from '../mocks/motorcycleMock';
 
+const invalidId = '999999999999999999999999';
+const idWithLengthNotAllowed = '12345678901234567892123';
+
 describe('Testes de MotorcycleModel', () => {
   const motorcycleModel = new MotorcycleModel();
 
@@ -71,7 +74,7 @@ describe('Testes de MotorcycleModel', () => {
     });
 
     it('Retorna "null" se não encontrar a moto pelo id', async () => {
-      const result = await motorcycleModel.readOne('999999999999999999999999');
+      const result = await motorcycleModel.readOne(invalidId);
 
       expect(result).to.be.eqls(null);
     });
@@ -103,7 +106,7 @@ describe('Testes de MotorcycleModel', () => {
     describe('Quando o id é inexistente', () => {
       it('Retorna valor nulo', async () => {
         const result = await motorcycleModel.update(
-          '999999999999999999999999',
+          invalidId,
           motorcycleMock.updatedMotorcycle,
         );
 
@@ -137,7 +140,7 @@ describe('Testes de MotorcycleModel', () => {
     describe('Quando o id é inexistente', () => {
       it('Retorna valor nulo', async () => {
         const result = await motorcycleModel.delete(
-          '999999999999999999999999',
+          invalidId,
         );
 
         expect(result).to.be.eqls(null);

@@ -4,6 +4,9 @@ import { Model } from 'mongoose';
 import * as carMock from '../mocks/carMock';
 import CarModel from '../../../models/Car.model';
 
+const invalidId = '999999999999999999999999';
+const idWithLengthNotAllowed = '12345678901234567892123';
+
 const { expect } = chai;
 
 describe('Testes de CarModel', () => {
@@ -101,7 +104,7 @@ describe('Testes de CarModel', () => {
 
     describe('Quando o id não existe', () => {
       it('Retorna valor nulo', async () => {
-        const result = await carModel.update('999999999999999999999999', carMock.updatedCar);
+        const result = await carModel.update(invalidId, carMock.updatedCar);
   
         expect(result).to.be.eqls(null);
       });
@@ -130,7 +133,7 @@ describe('Testes de CarModel', () => {
 
     describe('Quando o id não existe', () => {
       it('Retorna valor nulo', async () => {
-        const result = await carModel.delete('999999999999999999999999');
+        const result = await carModel.delete(invalidId);
   
         expect(result).to.be.eqls(null);
       });

@@ -7,6 +7,9 @@ import { ZodError } from 'zod';
 
 const { expect } = chai;
 
+const invalidId = '999999999999999999999999';
+const idWithLengthNotAllowed = '12345678901234567892123';
+
 describe('Testes de CarService', () => {
   const carModel = new CarModel();
   const carService = new CarService(carModel);
@@ -172,7 +175,7 @@ describe('Testes de CarService', () => {
 
         it('Lança o erro "idLengthNotAllowed"', async () => {
           try {
-            await carService.readOne('12345678901234567892123');
+            await carService.readOne(idWithLengthNotAllowed);
           } catch(err) {
             expect((err as Error).message).to.be.equal('idLengthNotAllowed');
           }
@@ -191,7 +194,7 @@ describe('Testes de CarService', () => {
 
         it('Lança o erro "idLengthNotAllowed"', async () => {
           try {
-            await carService.readOne('999999999999999999999999');
+            await carService.readOne(invalidId);
           } catch(err) {
             expect((err as Error).message).to.be.equal('objectNotFound');
           }
@@ -246,7 +249,7 @@ describe('Testes de CarService', () => {
 
         it('Lança o erro "objectNotFound"', async () => {
           try{
-            await carService.update('999999999999999999999999', carMock.updatedCar);
+            await carService.update(invalidId, carMock.updatedCar);
           } catch(err) {
             expect((err as Error).message).to.be.eqls('objectNotFound');
           }
@@ -291,7 +294,7 @@ describe('Testes de CarService', () => {
 
       it('Retorna valor nulo', async () => {
         try{
-          await carService.delete('999999999999999999999999');
+          await carService.delete(invalidId);
         } catch(err) {
           expect((err as Error).message).to.be.eqls('objectNotFound');
         }
