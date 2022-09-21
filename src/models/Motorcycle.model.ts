@@ -13,6 +13,8 @@ const motorcycleMongooseSchema = new Schema<IMotorcycle>({
     enum: ['Street', 'Custom', 'Trail'],
   },
   engineCapacity: Number,
+}, {
+  versionKey: false,
 });
 
 class MotorcycleModel extends MongoModel<IMotorcycle> {
