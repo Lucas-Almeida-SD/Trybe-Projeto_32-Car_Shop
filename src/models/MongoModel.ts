@@ -1,4 +1,4 @@
-import { Model } from 'mongoose';
+import { Model, UpdateQuery } from 'mongoose';
 import { IModel } from '../interfaces/IModel';
 
 abstract class MongoModel<T> implements IModel<T> {
@@ -17,9 +17,11 @@ abstract class MongoModel<T> implements IModel<T> {
   }
 
   public async update(_id: string, obj: T): Promise<T | null> {
+    const object = obj as UpdateQuery<T>;
+
     return this.model.findOneAndUpdate(
       { _id },
-      { ...obj, $unset: { __v: '' } },
+      { ...object },
       { 
         returnOriginal: false,
       },
