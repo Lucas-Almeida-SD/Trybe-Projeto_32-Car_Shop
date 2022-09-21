@@ -1,0 +1,763 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "REST API",
+    "description": "API to manage the data of a vehicle dealership."
+  },
+  "host": "localhost:3001",
+  "basePath": "/",
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/cars": {
+      "post": {
+        "tags": ["Cars"],
+        "description": "Create a new car.",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "type": "object",
+            "properties": {
+              "model": {
+                "type": "string",
+                "example": "Ferrari Maranello"
+              },
+              "year": {
+                "type": "integer",
+                "example": 1963
+              },
+              "color": 
+              {
+                "type": "string",
+                "example": "red"
+              },
+              "buyValue": {
+                "type": "integer",
+                "example": 3500000
+              },
+              "seatsQty": {
+                "type": "integer",
+                "example": 2
+              },
+              "doorsQty": {
+                "type": "integer",
+                "example": 2
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "CREATED",
+            "examples": {
+              "application/json": {
+                "_id": "4edd40c86762e0fb12000003",
+                "model": "Ferrari Maranello",
+                "year": 1963,
+                "color": "red",
+                "buyValue": 3500000,
+                "seatsQty": 2,
+                "doorsQty": 2
+              }
+            }
+          },
+          "400": {
+            "description": "BAD REQUEST",
+            "examples": {
+              "application/json": {
+                "message": [
+                  {
+                    "code": "invalid_type",
+                    "expected": "string",
+                    "received": "undefined",
+                    "path": [
+                      "model"
+                    ],
+                    "message": "Required"
+                  },
+                  {
+                    "code": "invalid_type",
+                    "expected": "number",
+                    "received": "undefined",
+                    "path": [
+                      "year"
+                    ],
+                    "message": "Required"
+                  },
+                  {
+                    "code": "invalid_type",
+                    "expected": "string",
+                    "received": "undefined",
+                    "path": [
+                      "color"
+                    ],
+                    "message": "Required"
+                  },
+                  {
+                    "code": "invalid_type",
+                    "expected": "number",
+                    "received": "undefined",
+                    "path": [
+                      "buyValue"
+                    ],
+                    "message": "Required"
+                  },
+                  {
+                    "code": "invalid_type",
+                    "expected": "number",
+                    "received": "undefined",
+                    "path": [
+                      "doorsQty"
+                    ],
+                    "message": "Required"
+                  },
+                  {
+                    "code": "invalid_type",
+                    "expected": "number",
+                    "received": "undefined",
+                    "path": [
+                      "seatsQty"
+                    ],
+                    "message": "Required"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": ["Cars"],
+        "description": "Reads all cars.",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "examples":{
+              "application/json":[
+                {
+                  "_id": "63292038e009498060dd408e",
+                  "model": "Ferrari Maranello",
+                  "year": 1963,
+                  "color": "red",
+                  "buyValue": 3500000,
+                  "doorsQty": 2,
+                  "seatsQty": 2
+                },
+                {
+                  "_id": "6329230f6c7fb956b9ee81e0",
+                  "model": "Bugatti La Voiture",
+                  "year": 1983,
+                  "color": "green",
+                  "buyValue": 96000000,
+                  "doorsQty": 4,
+                  "seatsQty": 5
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "/cars/{id}": {
+      "get": {
+        "tags": ["Cars"],
+        "description": "Reads a car matching the id.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "example": "63292038e009498060dd408e"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "examples": {
+              "application/json": {
+                "_id": "63292038e009498060dd408e",
+                "model": "Ferrari Maranello",
+                "year": 1963,
+                "color": "red",
+                "buyValue": 3500000,
+                "doorsQty": 2,
+                "seatsQty": 2
+              }
+            }
+          },
+          "400": {
+            "description":"BAD REQUEST",
+            "examples": {
+              "application/json": {
+                "error": "Id must have 24 hexadecimal characters"
+              }
+            }
+          },
+          "404": {
+            "description": "NOT FOUND",
+            "examples": {
+              "application/json": {
+                "error": "Object not found"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Cars"],
+        "description": "Updates a car matching the id.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "example": "63292038e009498060dd408e"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "type": "object",
+            "properties": {
+              "model": {
+                "type": "string",
+                "example": "Uno da Escada"
+              },
+              "year": {
+                "type": "integer",
+                "example": 1966
+              },
+              "color": 
+              {
+                "type": "string",
+                "example": "blue"
+              },
+              "buyValue": {
+                "type": "integer",
+                "example": 3500
+              },
+              "seatsQty": {
+                "type": "integer",
+                "example": 2
+              },
+              "doorsQty": {
+                "type": "integer",
+                "example": 2
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "examples": {
+              "application/json": {
+                  "_id": "63292038e009498060dd408e",
+                  "model": "Uno da Escada",
+                  "year": 1966,
+                  "color": "blue",
+                  "buyValue": 3500,
+                  "seatsQty": 2,
+                  "doorsQty": 2
+              }
+            }
+          },
+          "400": {
+            "description": "BAD REQUEST",
+            "examples": {
+              "application/json": [
+                {
+                  "message": [
+                    {
+                      "code": "invalid_type",
+                      "expected": "string",
+                      "received": "undefined",
+                      "path": [
+                        "model"
+                      ],
+                      "message": "Required"
+                    },
+                    {
+                      "code": "invalid_type",
+                      "expected": "number",
+                      "received": "undefined",
+                      "path": [
+                        "year"
+                      ],
+                      "message": "Required"
+                    },
+                    {
+                      "code": "invalid_type",
+                      "expected": "string",
+                      "received": "undefined",
+                      "path": [
+                        "color"
+                      ],
+                      "message": "Required"
+                    },
+                    {
+                      "code": "invalid_type",
+                      "expected": "number",
+                      "received": "undefined",
+                      "path": [
+                        "buyValue"
+                      ],
+                      "message": "Required"
+                    },
+                    {
+                      "code": "invalid_type",
+                      "expected": "number",
+                      "received": "undefined",
+                      "path": [
+                        "doorsQty"
+                      ],
+                      "message": "Required"
+                    },
+                    {
+                      "code": "invalid_type",
+                      "expected": "number",
+                      "received": "undefined",
+                      "path": [
+                        "seatsQty"
+                      ],
+                      "message": "Required"
+                    }
+                  ]
+                }, 
+                {
+                  "error": "Id must have 24 hexadecimal characters"
+                }
+              ]
+            }
+          },
+          "404": {
+            "description": "NOT FOUND",
+            "examples": {
+              "application/json": {
+                "error": "Object not found"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Cars"],
+        "description": "Delete a car matching the id.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "example": "63292038e009498060dd408e"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "NO CONTENT"
+          },
+          "400": {
+            "description":"BAD REQUEST",
+            "examples": {
+              "application/json": {
+                "error": "Id must have 24 hexadecimal characters"
+              }
+            }
+          },
+          "404": {
+            "description": "NOT FOUND",
+            "examples": {
+              "application/json": {
+                "error": "Object not found"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/motorcycles/": {
+      "post": {
+        "tags": ["Motorcycles"],
+        "description": "Create a new motorcycle.",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "type": "object",
+            "properties": {
+              "model": {
+                "type": "string",
+                "example": "Honda CG Titan 125"
+              },
+              "year": {
+                "type": "integer",
+                "example": 1963
+              },
+              "color": 
+              {
+                "type": "string",
+                "example": "red"
+              },
+              "buyValue": {
+                "type": "integer",
+                "example": 3500
+              },
+              "category": {
+                "type": "string",
+                "example": "Street"
+              },
+              "engineCapacity": {
+                "type": "integer",
+                "example": 125
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "CREATED",
+            "examples": {
+              "application/json": {
+                "model": "Honda CG Titan 125",
+                "year": 1963,
+                "color": "red",
+                "buyValue": 3500,
+                "category": "Street",
+                "engineCapacity": 125,
+                "_id": "632a66f5d91c618f3e558326"
+              }
+            }
+          },
+          "400": {
+            "description":"BAD REQUEST",
+            "examples": {
+              "application/json": {
+                "message": [
+                  {
+                    "code": "invalid_type",
+                    "expected": "string",
+                    "received": "undefined",
+                    "path": [
+                      "model"
+                    ],
+                    "message": "Required"
+                  },
+                  {
+                    "code": "invalid_type",
+                    "expected": "number",
+                    "received": "undefined",
+                    "path": [
+                      "year"
+                    ],
+                    "message": "Required"
+                  },
+                  {
+                    "code": "invalid_type",
+                    "expected": "string",
+                    "received": "undefined",
+                    "path": [
+                      "color"
+                    ],
+                    "message": "Required"
+                  },
+                  {
+                    "code": "invalid_type",
+                    "expected": "number",
+                    "received": "undefined",
+                    "path": [
+                      "buyValue"
+                    ],
+                    "message": "Required"
+                  },
+                  {
+                    "code": "invalid_enum_value",
+                    "options": [
+                      "Street",
+                      "Custom",
+                      "Trail"
+                    ],
+                    "path": [
+                      "category"
+                    ],
+                    "message": "Invalid enum value. Expected 'Street' | 'Custom' | 'Trail', received undefined"
+                  },
+                  {
+                    "code": "invalid_type",
+                    "expected": "number",
+                    "received": "undefined",
+                    "path": [
+                      "engineCapacity"
+                    ],
+                    "message": "Required"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": ["Motorcycles"],
+        "description": "Reads all motorcycles.",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "examples": {
+              "application/json": [
+                {
+                  "model": "Honda CG Titan 125",
+                  "year": 1963,
+                  "color": "red",
+                  "buyValue": 3500,
+                  "category": "Street",
+                  "engineCapacity": 125,
+                  "_id": "632a68a0bd6232ff427cb4c6"
+                },
+                {
+                  "model": "Yamaha YBR 125",
+                  "year": 1978,
+                  "color": "gray",
+                  "buyValue": 4750,
+                  "category": "Custom",
+                  "engineCapacity": 125,
+                  "_id": "632a699bbd6232ff427cb4c9"
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "/motorcycles/{id}": {
+      "get": {
+        "tags": ["Motorcycles"],
+        "description": "Reads a motorcycle matching the id.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "example": "632a68a0bd6232ff427cb4c6"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "examples": {
+              "application/json": {
+                "model": "Honda CG Titan 125",
+                "year": 1963,
+                "color": "red",
+                "buyValue": 3500,
+                "category": "Street",
+                "engineCapacity": 125,
+                "_id": "632a68a0bd6232ff427cb4c6"
+              }
+            }
+          },
+          "400": {
+            "description":"BAD REQUEST",
+            "examples": {
+              "application/json": {
+                "error": "Id must have 24 hexadecimal characters"
+              }
+            }
+          },
+          "404": {
+            "description": "NOT FOUND",
+            "examples": {
+              "application/json": {
+                "error": "Object not found"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Motorcycles"],
+        "description": "Updates a motorcycle matching the id.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "example": "632a68a0bd6232ff427cb4c6"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "type": "object",
+            "properties": {
+              "model": {
+                "type": "string",
+                "example": "Honda CG Titan 125"
+              },
+              "year": {
+                "type": "integer",
+                "example": 1963
+              },
+              "color": 
+              {
+                "type": "string",
+                "example": "black"
+              },
+              "buyValue": {
+                "type": "integer",
+                "example": 3500
+              },
+              "category": {
+                "type": "string",
+                "example": "Trail"
+              },
+              "engineCapacity": {
+                "type": "integer",
+                "example": 125
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "examples": {
+              "application/json": {
+                "_id": "632a68a0bd6232ff427cb4c6",
+                "model": "Honda CG Titan 125",
+                "year": 1963,
+                "color": "black",
+                "buyValue": 3500,
+                "category": "Trail",
+                "engineCapacity": 125
+              }
+            }
+          },
+          "400": {
+            "description":"BAD REQUEST",
+            "examples": {
+              "application/json": [
+                {
+                  "message": [
+                    {
+                      "code": "invalid_type",
+                      "expected": "string",
+                      "received": "undefined",
+                      "path": [
+                        "model"
+                      ],
+                      "message": "Required"
+                    },
+                    {
+                      "code": "invalid_type",
+                      "expected": "number",
+                      "received": "undefined",
+                      "path": [
+                        "year"
+                      ],
+                      "message": "Required"
+                    },
+                    {
+                      "code": "invalid_type",
+                      "expected": "string",
+                      "received": "undefined",
+                      "path": [
+                        "color"
+                      ],
+                      "message": "Required"
+                    },
+                    {
+                      "code": "invalid_type",
+                      "expected": "number",
+                      "received": "undefined",
+                      "path": [
+                        "buyValue"
+                      ],
+                      "message": "Required"
+                    },
+                    {
+                      "code": "invalid_enum_value",
+                      "options": [
+                        "Street",
+                        "Custom",
+                        "Trail"
+                      ],
+                      "path": [
+                        "category"
+                      ],
+                      "message": "Invalid enum value. Expected 'Street' | 'Custom' | 'Trail', received undefined"
+                    },
+                    {
+                      "code": "invalid_type",
+                      "expected": "number",
+                      "received": "undefined",
+                      "path": [
+                        "engineCapacity"
+                      ],
+                      "message": "Required"
+                    }
+                  ]
+                },
+                {
+                  "error": "Id must have 24 hexadecimal characters"
+                }
+              ]
+            }
+          },
+          "404": {
+            "description": "NOT FOUND",
+            "examples": {
+              "application/json": {
+                "error": "Object not found"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Motorcycles"],
+        "description": "Delete a motorcycle matching the id.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "example": "632a68a0bd6232ff427cb4c6"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "NO CONTENT"
+          },
+          "400": {
+            "description":"BAD REQUEST",
+            "examples": {
+              "application/json": {
+                "error": "Id must have 24 hexadecimal characters"
+              }
+            }
+          },
+          "404": {
+            "description": "NOT FOUND",
+            "examples": {
+              "application/json": {
+                "error": "Object not found"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
